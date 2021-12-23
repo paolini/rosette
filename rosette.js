@@ -4,13 +4,13 @@ function draw() {
     var canvas = document.getElementById("my_canvas");
     var ctx = canvas.getContext('2d');
     var n = parseInt(input_n.value); // number of rombi coronae
+    var m = (n - n%2)/2;
     document.getElementById("span_n").innerText = n;
-    var alpha = Math.PI / (2*n+1);
-    var path = [[0,0]]; // n+1 points
-    var x = 1;
+    var alpha = Math.PI / n;
+    var path = [[0,0]]; // m+1 points
+    var x = 0;
     var y = 0;
-    path.push([x,y])
-    for (var i=1; i<=n; ++i) {
+    for (var i=0; i<=m; ++i) {
         if (i%2 == 1) {
             x += Math.cos((i+1)*alpha);
             y += Math.sin((i+1)*alpha);
@@ -22,7 +22,7 @@ function draw() {
     }
     var center_x = canvas.width / 2;
     var center_y = canvas.height /2;
-    var r = Math.min(canvas.width, canvas.height)/2/Math.sqrt(Math.pow(path[n][0],2) + Math.pow(path[n][1],2));
+    var r = Math.min(canvas.width, canvas.height)/2/Math.sqrt(Math.pow(path[m][0],2) + Math.pow(path[m][1],2));
 
     function draw_rombus(p0, p1, p2, rotation) {
         var xs = [p0[0], p1[0], p2[0], p0[0]+p2[0]-p1[0]];
@@ -48,10 +48,10 @@ function draw() {
         "rgb(153, 254, 255)"];
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    for (var i=1; i<n+1; ++i) {
+    for (var i=1; i<m+1; ++i) {
         ctx.fillStyle = palette[(i-1)%palette.length];
-        for (var j=0; j<2*n+1; ++j) {
-            var rotation = 2*Math.PI*j/(2*n+1);
+        for (var j=0; j<n; ++j) {
+            var rotation = 2*Math.PI*j/(n);
             draw_rombus(path[i-1],path[i],path[i+1], rotation);
         }
     }
