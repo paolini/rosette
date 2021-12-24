@@ -22,7 +22,7 @@ function draw() {
     }
     var center_x = canvas.width / 2;
     var center_y = canvas.height /2;
-    var r = Math.min(canvas.width, canvas.height)/2/Math.sqrt(Math.pow(path[m][0],2) + Math.pow(path[m][1],2));
+    var r = Math.min(canvas.width, canvas.height)/2/Math.sqrt(Math.pow(path[m][0],2) + Math.pow(path[m][1],2)) - 1;
 
     function draw_rombus(p0, p1, p2, rotation) {
         var xs = [p0[0], p1[0], p2[0], p0[0]+p2[0]-p1[0]];
@@ -48,6 +48,7 @@ function draw() {
         "rgb(153, 254, 255)"];
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.lineJoin = "round";
     for (var i=1; i<m+1; ++i) {
         ctx.fillStyle = palette[(i-1)%palette.length];
         for (var j=0; j<n; ++j) {
